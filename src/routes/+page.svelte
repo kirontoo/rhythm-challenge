@@ -1,6 +1,7 @@
 <script lang="ts">
-	import SettingsIcon from '$lib/SettingsIcon.svelte';
-	import SpeakerWaveIcon from '$lib/SpeakerWaveIcon.svelte';
+	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
+	import SpeakerWaveIcon from '$lib/components/icons/SpeakerWaveIcon.svelte';
+	import metronomeClick from '$lib/assets/metronome-85688.mp3';
 </script>
 
 <main class="flex h-screen w-screen justify-center bg-red-400">
@@ -12,10 +13,10 @@
 
 		<div class="flex h-4/5 content-center justify-center">
 			<div class="grid grid-cols-4 grid-rows-1 gap-16 place-self-center">
-				<div class="h-32 w-32 bg-teal-500"></div>
-				<div class="h-32 w-32 bg-teal-500"></div>
-				<div class="h-32 w-32 bg-teal-500"></div>
-				<div class="h-32 w-32 bg-teal-500"></div>
+				<div class="h-32 w-32 bg-teal-400"></div>
+				<div class="h-32 w-32 bg-teal-400"></div>
+				<div class="h-32 w-32 bg-teal-400"></div>
+				<div class="h-32 w-32 bg-teal-400"></div>
 			</div>
 		</div>
 		<footer class="flex grow-0 flex-row place-content-center justify-between">
