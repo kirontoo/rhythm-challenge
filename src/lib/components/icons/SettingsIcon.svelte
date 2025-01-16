@@ -1,13 +1,8 @@
-<script lang="ts">
-	let classname;
-	export { classname as class };
-</script>
-
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	viewBox="0 0 24 24"
 	fill="currentColor"
-	class="size-6 {classname}"
+	class="size-6 {$$restProps.class || ''}"
 >
 	<path
 		fill-rule="evenodd"
