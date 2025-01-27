@@ -36,3 +36,27 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+---
+
+Inspiration: [rhythm challenge](https://youtu.be/z_fJTMWPqcw?si=a3XxshY8nKx28pDA)
+
+## how to calculate BPM
+
+BPM = 1 min / beat duration
+BPM = 60s / beat duration
+
+ex: 60s/0.5s = 120 BPM
+
+Beat duration = 60 / BPM
+ex: 60s / 100 BPM = 0.6s = 600ms
+
+## Todos:
+- [ ] metronome logic
+- [ ] clickable icons
+- [ ] adjustable volume
+- [ ] pause and play with space bar button
+- [ ] slider for tempo, can also just type it in
+
+
+probably use svelte context api
