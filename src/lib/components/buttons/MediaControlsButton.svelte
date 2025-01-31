@@ -1,8 +1,15 @@
 <script lang="ts">
 	import PauseIcon from '../icons/PauseIcon.svelte';
 	import PlayIcon from '../icons/PlayIcon.svelte';
+	import type { SVGAttributes } from 'svelte/elements';
 
-	let { onPaused = () => {}, onPlay = () => {}, isPaused = false, ...restProps } = $props();
+	interface Props extends SVGAttributes<SVGSVGElement> {
+		onPause?: () => void;
+		onPlay?: () => void;
+		isPaused?: boolean;
+	}
+
+	let { isPaused = $bindable(false), onPause, onPlay, ...restProps }: Props = $props();
 
 	function onKeyDown(e: KeyboardEvent) {
 		switch (e.code) {
@@ -16,10 +23,12 @@
 
 	function toggleMediaButton() {
 		isPaused = !isPaused;
-		if (isPaused) {
-			onPaused();
+		if (isPaused && typeof onPause === 'function') {
+			onPause();
 		} else {
-			onPlay();
+			if (typeof onPlay === 'function') {
+				onPlay();
+			}
 		}
 	}
 </script>
