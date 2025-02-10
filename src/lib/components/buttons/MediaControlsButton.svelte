@@ -9,7 +9,7 @@
 		isPaused?: boolean;
 	}
 
-	let { isPaused = $bindable(false), onPause, onPlay, ...restProps }: Props = $props();
+	let { isPaused = $bindable(true), onPause, onPlay, ...restProps }: Props = $props();
 
 	function onKeyDown(e: KeyboardEvent) {
 		switch (e.code) {
