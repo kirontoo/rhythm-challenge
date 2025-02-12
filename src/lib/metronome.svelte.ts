@@ -4,10 +4,10 @@ interface Note {
 }
 
 export enum Rhythm {
-	SixteenthNote = 16,	
+	SixteenthNote = 16,
 	EigthNote = 8,
 	QuarterNote = 4
-} 
+}
 
 class Metronome {
 
@@ -18,6 +18,8 @@ class Metronome {
 
 	// 0 == 16th, 1 == 8th, 2 == quarter note
 	noteResolution: Rhythm = Rhythm.SixteenthNote;
+
+	public draw: (currentNote: number) => void;
 
 	private window: Window | null = null;
 
@@ -44,7 +46,6 @@ class Metronome {
 	private noteLength: number = 0.05;
 
 
-	// TODO: do we need this?
 	// the last "box" we drew on the screen
 	private last16thNoteDrawn: number = -1;
 
@@ -55,8 +56,11 @@ class Metronome {
 	// The Web Worker used to fire timer messages
 	private timerWorker = new Worker(new URL('./worker.js', import.meta.url));
 
-	constructor(window: Window) {
+	constructor(window: Window, draw: (currentNote: number) => void) {
 		this.window = window;
+		this.draw = draw;
+
+		this.tick = this.tick.bind(this);
 
 		this.window.requestAnimationFrame(this.tick);
 		this.timerWorker.addEventListener("message", this.onWorkerMessage.bind(this));
@@ -141,6 +145,7 @@ class Metronome {
 
 			// We only need to draw if the note has moved.
 			if (this.last16thNoteDrawn != currentNote) {
+				this.draw(currentNote);
 				this.last16thNoteDrawn = currentNote;
 			}
 		}
