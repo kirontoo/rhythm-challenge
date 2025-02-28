@@ -4,7 +4,7 @@
 	viewBox="0 0 11 32"
 	fill="none"
 	xmlns="http://www.w3.org/2000/svg"
-	class={$$restProps.class || ''}
+	class={$$restProps.class || 'text-white'}
 >
 	<ellipse
 		cx="5.21311"
