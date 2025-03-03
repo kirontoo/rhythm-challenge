@@ -26,8 +26,6 @@
 		}
 
 		window.addEventListener("resize", onResizeWindow);
-		console.log(innerWidth.current)
-		console.log(innerHeight.current)
 	});
 
 	function onResizeWindow() {
@@ -41,10 +39,10 @@
 	function draw(currentNote: number) {
 		if (!canvasCtx || !renderer) return;
 
-		var x = Math.floor(canvas.width / 8);
+		let x = Math.floor(canvas.width / 8);
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 		let firstBeat = currentNote / 4;
-		for (var i = 0; i < 4; i++) {
+		for (let i = 0; i < 4; i++) {
 			if (i == firstBeat) {
 				// draw a pink box only on the 1st beat of each measure
 				canvasCtx.fillStyle = 'oklch(0.718 0.202 349.761)';
