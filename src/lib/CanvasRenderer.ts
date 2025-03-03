@@ -9,8 +9,8 @@ export interface SVGElement {
 
 class CanvasRenderer {
     private ctx: CanvasRenderingContext2D;
-    private width: number;
-    private height: number;
+    public width: number;
+    public height: number;
 
     constructor(ctx: CanvasRenderingContext2D, height: number, width: number) {
         this.ctx = ctx;
