@@ -8,10 +8,10 @@
 	import CanvasRenderer from '$lib/CanvasRenderer';
 	import QuarterNoteIconSVG from '$lib/components/icons/notes/QuarterNoteIcon.svg';
 	import { innerWidth, innerHeight } from 'svelte/reactivity/window';
-	let metronome: Metronome | null = null;;
-	let canvasCtx: CanvasRenderingContext2D | null = null;;
+	let metronome: Metronome | null = null;
+	let canvasCtx: CanvasRenderingContext2D | null = null;
 	let canvas: HTMLCanvasElement;
-	let renderer: CanvasRenderer | null = null;;
+	let renderer: CanvasRenderer | null = null;
 
 	onMount(() => {
 		canvasCtx = canvas.getContext('2d');
@@ -21,16 +21,17 @@
 			metronome.noteResolution = Rhythm.QuarterNote;
 		}
 
-		if (!renderer) {
+		if (!renderer && canvasCtx !== null) {
 			renderer = new CanvasRenderer(canvasCtx, canvas.width, canvas.height);
 		}
 
-		window.addEventListener("resize", onResizeWindow);
+		window.addEventListener('resize', onResizeWindow);
 	});
 
 	function onResizeWindow() {
-		canvas.height = innerHeight.current / 2;
-		canvas.width = innerWidth.current;
+		if (!renderer) return;
+		canvas.height = innerHeight.current! / 2;
+		canvas.width = innerWidth.current!;
 
 		renderer.width = canvas.width;
 		renderer.height = canvas.height;
@@ -46,14 +47,17 @@
 			if (i == firstBeat) {
 				// draw a pink box only on the 1st beat of each measure
 				canvasCtx.fillStyle = 'oklch(0.718 0.202 349.761)';
-
 			} else {
 				// draw teal box
 				canvasCtx.fillStyle = 'oklch(0.777 0.152 181.912)';
 			}
 
 			const xPos = x * (i + 1) + canvas.width / 16;
-			renderer.drawSVG({src: QuarterNoteIconSVG, width: 100, height: 100}, xPos + (150 / 8 ), x + (150 / 6.5));
+			renderer.drawSVG(
+				{ src: QuarterNoteIconSVG, width: 100, height: 100 },
+				xPos + 150 / 8,
+				x + 150 / 6.5
+			);
 			canvasCtx.fillRect(xPos, x, 150, 150);
 		}
 		canvasCtx.font = '40px serif';
@@ -76,7 +80,8 @@
 	<div class="container relative flex flex-col content-center justify-center">
 		<div class="flex h-4/5 flex-col content-center justify-center gap-4">
 			<div class="grid grid-cols-4 grid-rows-1 gap-16 place-self-center">
-				<canvas height={innerHeight.current / 2} width={innerWidth.current} bind:this={canvas}></canvas>
+				<canvas height={innerHeight.current! / 2} width={innerWidth.current!} bind:this={canvas}
+				></canvas>
 				<!-- <img src={QuarterNoteIconSVG} width={32} height={32}/> -->
 			</div>
 			<div class="mt-8 flex w-full justify-center">
