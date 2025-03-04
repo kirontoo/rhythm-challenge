@@ -1,6 +1,6 @@
 interface Note {
 	note: number, // beat number
-	time: number  // time to play
+	time: number  // time it should play
 }
 
 export enum Rhythm {
@@ -20,7 +20,7 @@ class Metronome {
 	// 0 == 16th, 1 == 8th, 2 == quarter note
 	noteResolution: Rhythm = Rhythm.SixteenthNote;
 
-	public currentMeasure: number = 0;
+	public currentMeasure: number = 1;
 
 	public draw: (currentNote: number) => void;
 
@@ -169,16 +169,18 @@ class Metronome {
 			this.unlockedAudio = true;
 		}
 
+		if (!this.isPlaying) {
+			this.currentMeasure--;
+		}
+
 		this.isPlaying = !this.isPlaying;
 
 		if (this.isPlaying) { // start playing
 			this.current16thNote = 0;
 			this.nextNoteTime = this.audioContext.currentTime;
 			this.timerWorker.postMessage("start");
-			return "stop";
 		} else {
 			this.timerWorker.postMessage("stop");
-			return "play";
 		}
 	}
 
