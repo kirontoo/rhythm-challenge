@@ -9,7 +9,7 @@ const NoteIcons: Record<string, SVGElement> = {
     quarter: { src: QuarterNoteIconSVG, width: 100, height: 100 },
     sixteenth: { src: SixteenthNoteIconSVG, width: 100, height: 100 },
     triplet: { src: TripletNoteIconSVG, width: 100, height: 100 },
-    eigth: { src: EighthNoteIconSVG, width: 100, height: 100 },
+    eighth: { src: EighthNoteIconSVG, width: 100, height: 100 },
     quarterRest: { src: QuarterRestIconSVG, width: 100, height: 100 },
 };
 
