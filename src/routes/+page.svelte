@@ -2,9 +2,9 @@
 	import SettingsIcon from '$lib/components/icons/SettingsIcon.svelte';
 	import MediaControlsButton from '$lib/components/buttons/MediaControlsButton.svelte';
 	import TempoButton from '$lib/components/buttons/TempoButton.svelte';
-	import Metronome from '$lib/metronome.svelte';
+	import Metronome from '$lib/Metronome.svelte';
 	import { onMount } from 'svelte';
-	import { Rhythm } from '$lib/metronome.svelte';
+	import { Rhythm } from '$lib/Metronome.svelte';
 	import CanvasRenderer from '$lib/CanvasRenderer';
 	import QuarterNoteIconSVG from '$lib/components/icons/notes/QuarterNoteIcon.svg';
 	import { innerWidth, innerHeight } from 'svelte/reactivity/window';
