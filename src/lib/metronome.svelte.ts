@@ -13,11 +13,14 @@ class Metronome {
 
 	// Are we currently playing?
 	isPlaying = false;
+
 	// tempo (in beats per minute)
 	tempo: number = $state(120.0);
 
 	// 0 == 16th, 1 == 8th, 2 == quarter note
 	noteResolution: Rhythm = Rhythm.SixteenthNote;
+
+	public currentMeasure: number = 0;
 
 	public draw: (currentNote: number) => void;
 
@@ -44,7 +47,6 @@ class Metronome {
 
 	// length of "beep" (in seconds)
 	private noteLength: number = 0.05;
-
 
 	// the last "box" we drew on the screen
 	private last16thNoteDrawn: number = -1;
@@ -105,6 +107,7 @@ class Metronome {
 		if (beatNumber % Rhythm.SixteenthNote === 0) {
 			// beat 0 == high pitch
 			osc.frequency.value = 880.0;
+			this.currentMeasure++;
 		} else if (beatNumber % 4 === 0) {
 			// quarter notes = medium pitch
 			osc.frequency.value = 440.0;
@@ -177,6 +180,10 @@ class Metronome {
 			this.timerWorker.postMessage("stop");
 			return "play";
 		}
+	}
+
+	reset() {
+		this.currentMeasure = 0;
 	}
 
 };
