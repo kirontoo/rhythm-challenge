@@ -42,10 +42,10 @@
 
 		let x = Math.floor(canvas.width / 8);
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-		let firstBeat = currentNote / 4;
+		let quarterBeat = currentNote / 4;
 		for (let i = 0; i < 4; i++) {
-			if (i == firstBeat) {
-				// draw a pink box only on the 1st beat of each measure
+			if (i == quarterBeat) {
+				// draw a pink box only on the quarter note
 				canvasCtx.fillStyle = 'oklch(0.718 0.202 349.761)';
 			} else {
 				// draw teal box
@@ -63,6 +63,7 @@
 		canvasCtx.font = '40px serif';
 		canvasCtx.fillStyle = 'white';
 		canvasCtx.fillText(`Current beat: ${currentNote + 1}`, 10, 50);
+		canvasCtx.fillText(`Current Measure: ${metronome!.currentMeasure}`, 10, 100);
 	}
 
 	function onPause() {
