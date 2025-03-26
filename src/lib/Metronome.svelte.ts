@@ -12,7 +12,7 @@ export enum Rhythm {
 class Metronome {
 
 	// Are we currently playing?
-	isPlaying = false;
+	public isPlaying = false;
 
 	// tempo (in beats per minute)
 	tempo: number = $state(120.0);
@@ -20,7 +20,7 @@ class Metronome {
 	// 0 == 16th, 1 == 8th, 2 == quarter note
 	noteResolution: Rhythm = Rhythm.SixteenthNote;
 
-	public currentMeasure: number = 1;
+	public currentMeasure: number = $state(0);
 
 	public draw: (currentNote: number) => void;
 
@@ -187,10 +187,6 @@ class Metronome {
 	reset() {
 		this.currentMeasure = 0;
 	}
-
 };
-
-
-
 
 export default Metronome;

@@ -6,12 +6,14 @@
 	import { onMount } from 'svelte';
 	import { Rhythm } from '$lib/Metronome.svelte';
 	import CanvasRenderer from '$lib/CanvasRenderer';
-	import QuarterNoteIconSVG from '$lib/components/icons/notes/QuarterNoteIcon.svg';
 	import { innerWidth, innerHeight } from 'svelte/reactivity/window';
+	import NoteTile from '$lib/NoteTile';
+
 	let metronome: Metronome | null = null;
 	let canvasCtx: CanvasRenderingContext2D | null = null;
 	let canvas: HTMLCanvasElement;
 	let renderer: CanvasRenderer | null = null;
+	let localMeasureCount = 0;
 
 	onMount(() => {
 		canvasCtx = canvas.getContext('2d');
@@ -26,6 +28,19 @@
 		}
 
 		window.addEventListener('resize', onResizeWindow);
+	});
+
+	$effect(() => {
+		// reference `currentMeasure` so that this code re-runs whenever it changes
+		metronome?.currentMeasure;
+		if (metronome && metronome.isPlaying) {
+			// update tiles only when the measure count increases
+			// this fixes the bug where it runs twice whenever the metronome is playing
+			if (metronome.currentMeasure > localMeasureCount) {
+				console.log('trigger weighted algo');
+				localMeasureCount = metronome.currentMeasure;
+			}
+		}
 	});
 
 	function onResizeWindow() {
@@ -53,11 +68,7 @@
 			}
 
 			const xPos = x * (i + 1) + canvas.width / 16;
-			renderer.drawSVG(
-				{ src: QuarterNoteIconSVG, width: 100, height: 100 },
-				xPos + 150 / 8,
-				x + 150 / 6.5
-			);
+			renderer.drawSVG(NoteTile.triplet, xPos + 150 / 8, x + 150 / 6.5);
 			canvasCtx.fillRect(xPos, x, 150, 150);
 		}
 		canvasCtx.font = '40px serif';
