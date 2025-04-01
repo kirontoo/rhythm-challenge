@@ -4,13 +4,14 @@ import EighthNoteIconSVG from "./components/icons/notes/EighthNoteIcon.svg";
 import TripletNoteIconSVG from "./components/icons/notes/TripletNoteIcon.svg";
 import QuarterRestIconSVG from "./components/icons/notes/QuarterRestIcon.svg";
 import { type SVGElement } from "./CanvasRenderer";
+import { Beat } from "./Levels";
 
 interface BeatTile extends SVGElement {
     // tile background color
     color: string
 }
 
-const NoteTile: Record<string, BeatTile> = {
+const NoteTile: Record<Beat, BeatTile> = {
     quarter: {
         src: QuarterNoteIconSVG,
         width: 100,
@@ -35,7 +36,7 @@ const NoteTile: Record<string, BeatTile> = {
         height: 100,
         color: "oklch(0.828 0.189 84.429)"
     },
-    quarterRest: {
+    rest: {
         src: QuarterRestIconSVG,
         width: 100,
         height: 100,
