@@ -8,12 +8,15 @@
 	import CanvasRenderer from '$lib/CanvasRenderer';
 	import { innerWidth, innerHeight } from 'svelte/reactivity/window';
 	import NoteTile from '$lib/NoteTile';
+	import BeatRandomizer from '$lib/BeatRandomizer';
+	import Levels from '$lib/Levels';
 
-	let metronome: Metronome | null = null;
+	let metronome: Metronome | null = $state(null);
 	let canvasCtx: CanvasRenderingContext2D | null = null;
 	let canvas: HTMLCanvasElement;
 	let renderer: CanvasRenderer | null = null;
 	let localMeasureCount = 0;
+	let level = new BeatRandomizer(Levels["1"]);
 
 	onMount(() => {
 		canvasCtx = canvas.getContext('2d');
@@ -32,13 +35,14 @@
 
 	$effect(() => {
 		// reference `currentMeasure` so that this code re-runs whenever it changes
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		metronome?.currentMeasure;
 		if (metronome && metronome.isPlaying) {
 			// update tiles only when the measure count increases
 			// this fixes the bug where it runs twice whenever the metronome is playing
 			if (metronome.currentMeasure > localMeasureCount) {
-				console.log('trigger weighted algo');
 				localMeasureCount = metronome.currentMeasure;
+				level.randomize();
 			}
 		}
 	});
@@ -58,19 +62,22 @@
 		let x = Math.floor(canvas.width / 8);
 		canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 		let quarterBeat = currentNote / 4;
+
+		// draw beat tiles
 		for (let i = 0; i < 4; i++) {
 			if (i == quarterBeat) {
 				// draw a pink box only on the quarter note
 				canvasCtx.fillStyle = 'oklch(0.718 0.202 349.761)';
 			} else {
-				// draw teal box
-				canvasCtx.fillStyle = 'oklch(0.777 0.152 181.912)';
+				// set tile color depending on type of tile
+				canvasCtx.fillStyle = NoteTile[level.queue[i]].color;
 			}
 
 			const xPos = x * (i + 1) + canvas.width / 16;
-			renderer.drawSVG(NoteTile.triplet, xPos + 150 / 8, x + 150 / 6.5);
+			renderer.drawSVG(NoteTile[level.queue[i]], xPos + 150 / 8, x + 150 / 6.5);
 			canvasCtx.fillRect(xPos, x, 150, 150);
 		}
+
 		canvasCtx.font = '40px serif';
 		canvasCtx.fillStyle = 'white';
 		canvasCtx.fillText(`Current beat: ${currentNote + 1}`, 10, 50);
