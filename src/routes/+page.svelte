@@ -16,7 +16,8 @@
 	let canvas: HTMLCanvasElement;
 	let renderer: CanvasRenderer | null = null;
 	let localMeasureCount = 0;
-	let level = new BeatRandomizer(Levels["1"]);
+	let beatRandomizer = new BeatRandomizer(Levels[1]);
+	let currentLevel = 1;
 
 	onMount(() => {
 		canvasCtx = canvas.getContext('2d');
@@ -42,7 +43,13 @@
 			// this fixes the bug where it runs twice whenever the metronome is playing
 			if (metronome.currentMeasure > localMeasureCount) {
 				localMeasureCount = metronome.currentMeasure;
-				level.randomize();
+
+				// advance to the next level
+				if(localMeasureCount > beatRandomizer.level.maxMeasure && currentLevel <= 5) {
+					currentLevel++;
+					beatRandomizer.setLevel(Levels[currentLevel]);
+				}
+				beatRandomizer.randomize();
 			}
 		}
 	});
@@ -70,11 +77,11 @@
 				canvasCtx.fillStyle = 'oklch(0.718 0.202 349.761)';
 			} else {
 				// set tile color depending on type of tile
-				canvasCtx.fillStyle = NoteTile[level.queue[i]].color;
+				canvasCtx.fillStyle = NoteTile[beatRandomizer.queue[i]].color;
 			}
 
 			const xPos = x * (i + 1) + canvas.width / 16;
-			renderer.drawSVG(NoteTile[level.queue[i]], xPos + 150 / 8, x + 150 / 6.5);
+			renderer.drawSVG(NoteTile[beatRandomizer.queue[i]], xPos + 150 / 8, x + 150 / 6.5);
 			canvasCtx.fillRect(xPos, x, 150, 150);
 		}
 
