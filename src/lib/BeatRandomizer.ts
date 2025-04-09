@@ -4,11 +4,11 @@ import { Beat, type Level } from "./Levels";
 export default class BeatRandomizer {
     private _queue: Array<Beat> = new Array(4);
     private totalWeight: number = 0;
-    private level: Level;
+    public level: Level;
 
     constructor(level: Level) {
         this.level = level;
-        this.totalWeight = this.level.weights.reduce((total, value) => value.weight + total, 0);
+        this.calculateTotalWeight();
         this.randomize();
     }
 
@@ -26,6 +26,10 @@ export default class BeatRandomizer {
         return Beat.rest;
     }
 
+    private calculateTotalWeight() {
+        this.totalWeight = this.level.weights.reduce((total, value) => value.weight + total, 0);
+    }
+
     // get 4 random beats
     public randomize() {
         for(let i = 0; i < 4; i++) {
@@ -35,6 +39,11 @@ export default class BeatRandomizer {
 
     get queue(): Array<Beat> {
         return this._queue;
+    }
+
+    public setLevel(lvl: Level) {
+        this.level = lvl;
+        this.calculateTotalWeight();
     }
 }
 
