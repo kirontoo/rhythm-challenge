@@ -40,7 +40,7 @@ const Levels: Record<number, Level> = {
             },
             {
                 beat: Beat.rest,
-                weight: 20
+                weight: 40
             },
         ]
     },
@@ -50,11 +50,11 @@ const Levels: Record<number, Level> = {
         weights: [
             {
                 beat: Beat.quarter,
-                weight: 60
+                weight: 50
             },
             {
                 beat: Beat.eighth,
-                weight: 30
+                weight: 60
             },
             {
                 beat: Beat.sixteenth,
@@ -92,7 +92,7 @@ const Levels: Record<number, Level> = {
             },
             {
                 beat: Beat.rest,
-                weight: 50
+                weight: 35
             },
         ]
     },
@@ -118,7 +118,7 @@ const Levels: Record<number, Level> = {
             },
             {
                 beat: Beat.rest,
-                weight: 50
+                weight: 30
             },
         ]
     },
@@ -144,7 +144,7 @@ const Levels: Record<number, Level> = {
             },
             {
                 beat: Beat.rest,
-                weight: 50
+                weight: 40
             },
         ]
     }
